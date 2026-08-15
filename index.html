@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Tap</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #dce7e5;
+  background:
+    radial-gradient(circle at 90% 5%, rgba(49,121,113,.16), transparent 28%),
+    radial-gradient(circle at 6% 88%, rgba(133,75,97,.12), transparent 30%),
+    #101512;
+}
+
+.container {
+  max-width: 620px;
+  margin: auto;
+  padding: 42px 19px 60px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.star {
+  font-size: 25px;
+  color: #9bd4cf;
+  margin-bottom: 8px;
+}
+
+h1 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: 35px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #9bd4cf;
+}
+
+.subtitle {
+  color: #919b98;
+  margin-top: 7px;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.date {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 7px 13px;
+  background: rgba(255,255,255,.035);
+  border-radius: 30px;
+  font-size: 12px;
+  color: #aab3b0;
+}
+
+.card {
+  background: rgba(29,32,30,.95);
+  border-radius: 22px;
+  padding: 22px;
+  margin-bottom: 17px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.05);
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.icon {
+  font-size: 23px;
+  margin-bottom: 8px;
+}
+
+.main {
+  font-family: Georgia, serif;
+  font-size: 21px;
+  line-height: 1.4;
+  color: #e3ecea;
+}
+
+.explain {
+  margin-top: 8px;
+  color: #a9b3b0;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.clinical { border-left: 5px solid #4b938c; }
+.clinical .label { color: #8fcac4; }
+
+.challenge { border-left: 5px solid #9a5b72; }
+.challenge .label { color: #d58ea6; }
+
+.kindness { border-left: 5px solid #8c6e36; }
+.kindness .label { color: #c8ad76; }
+
+.fact { border-left: 5px solid #486f95; }
+.fact .label { color: #92b0cf; }
+
+.question { border-left: 5px solid #72527f; }
+.question .label { color: #b89bc4; }
+
+.footer {
+  text-align: center;
+  color: #7f8986;
+  font-size: 12px;
+  margin-top: 30px;
+  line-height: 1.7;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="star">✦</div>
+  <h1>DAILY TAP</h1>
+  <div class="subtitle">A little something for your day.</div>
+  <div class="date" id="todayDate"></div>
+</div>
+
+<div class="card clinical">
+  <div class="icon">🩺</div>
+  <div class="label">Clinical Word of the Day</div>
+  <div class="main" id="clinicalWord"></div>
+  <div class="explain" id="clinicalDefinition"></div>
+</div>
+
+<div class="card challenge">
+  <div class="icon">🌱</div>
+  <div class="label">Challenge Yourself Today</div>
+  <div class="main" id="challenge"></div>
+</div>
+
+<div class="card kindness">
+  <div class="icon">🤝</div>
+  <div class="label">Do Something for Someone Else</div>
+  <div class="main" id="kindness"></div>
+</div>
+
+<div class="card fact">
+  <div class="icon">💡</div>
+  <div class="label">Did You Know?</div>
+  <div class="main" id="fact"></div>
+</div>
+
+<div class="card question">
+  <div class="icon">✨</div>
+  <div class="label">Today's Question</div>
+  <div class="main" id="question"></div>
+</div>
+
+<div class="footer">
+  Small things count.<br>
+  Learn something. Do something. Make someone's day. ♥
+</div>
+
+</div>
+
+<script>
+const dailyRecords = [
+  {
+    "clinicalWord": "Aphasia",
+    "clinicalDefinition": "Difficulty with language caused by brain injury or disease; it can affect speaking, understanding, reading, or writing.",
+    "challenge": "Take a 10-minute walk —no headphones.",
+    "kindness": "Tell a coworker one specific thing they did well.",
+    "fact": "Your left lung is slightly smaller than your right lung to make room for the heart.",
+    "question": "What made you laugh today?"
+  },
+  {
+    "clinicalWord": "Apnea",
+    "clinicalDefinition": "A temporary pause in breathing.",
+    "challenge": "Take a 10-minute walk —no multitasking.",
+    "kindness": "Tell a coworker one specific thing they did well. Keep it simple.",
+    "fact": "The smallest bones in the human body are the ossicles in the middle ear.",
+    "question": "What made you laugh today? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Arrhythmia",
+    "clinicalDefinition": "An abnormal heart rhythm.",
+    "challenge": "Take a 10-minute walk and do it slowly.",
+    "kindness": "Tell a coworker one specific thing they did well. Be specific.",
+    "fact": "Tooth enamel is the hardest substance in the human body.",
+    "question": "What made you laugh today? Keep it simple."
+  },
+  {
+    "clinicalWord": "Ataxia",
+    "clinicalDefinition": "Impaired coordination or balance.",
+    "challenge": "Take a 10-minute walk without turning it into another job.",
+    "kindness": "Tell a coworker one specific thing they did well. Do it without expecting anything back.",
+    "fact": "The cornea has no blood vessels.",
+    "question": "What made you laugh today? Be specific."
+  },
+  {
+    "clinicalWord": "Bradycardia",
+    "clinicalDefinition": "A heart rate slower than expected for the person and situation.",
+    "challenge": "Take a 10-minute walk and stop when the timer ends.",
+    "kindness": "Tell a coworker one specific thing they did well. Make it genuine, not performative.",
+    "fact": "Your skeleton is living tissue and is constantly being remodeled.",
+    "question": "What made you laugh today? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Cyanosis",
+    "clinicalDefinition": "A bluish or grayish discoloration of skin or mucous membranes associated with reduced oxygenation.",
+    "challenge": "Take a 10-minute walk while paying attention to how you feel.",
+    "kindness": "Tell a coworker one specific thing they did well. Small counts.",
+    "fact": "The diaphragm is the main muscle used during quiet breathing.",
+    "question": "What made you laugh today? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Delirium",
+    "clinicalDefinition": "An acute, fluctuating change in attention, awareness, and cognition.",
+    "challenge": "Take a 10-minute walk without posting it anywhere.",
+    "kindness": "Tell a coworker one specific thing they did well. Do it quietly.",
+    "fact": "Goosebumps are produced by tiny muscles attached to hair follicles.",
+    "question": "What made you laugh today? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "Dyspnea",
+    "clinicalDefinition": "Difficult or uncomfortable breathing; often described as shortness of breath.",
+    "challenge": "Take a 10-minute walk and leave your phone behind.",
+    "kindness": "Tell a coworker one specific thing they did well. Let it be enough.",
+    "fact": "Red blood cells lose their nuclei as they mature.",
+    "question": "What made you laugh today? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Dysphagia",
+    "clinicalDefinition": "Difficulty swallowing.",
+    "challenge": "Take a 10-minute walk just because it might feel good.",
+    "kindness": "Thank someone whose work often goes unnoticed.",
+    "fact": "The retina is neural tissue and is part of the central nervous system.",
+    "question": "What made you laugh today? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Edema",
+    "clinicalDefinition": "Swelling caused by excess fluid in body tissues.",
+    "challenge": "Take a 10-minute walk and notice one detail you usually miss.",
+    "kindness": "Thank someone whose work often goes unnoticed. Keep it simple.",
+    "fact": "The cerebellum contains more neurons than the cerebral cortex despite being much smaller.",
+    "question": "What is one thing you are looking forward to?"
+  },
+  {
+    "clinicalWord": "Erythema",
+    "clinicalDefinition": "Redness of the skin caused by increased blood flow.",
+    "challenge": "Drink a full glass of water —no headphones.",
+    "kindness": "Thank someone whose work often goes unnoticed. Be specific.",
+    "fact": "Most of the body’s serotonin is found outside the brain, especially in the gastrointestinal tract.",
+    "question": "What is one thing you are looking forward to? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Hematuria",
+    "clinicalDefinition": "Blood in the urine.",
+    "challenge": "Drink a full glass of water —no multitasking.",
+    "kindness": "Thank someone whose work often goes unnoticed. Do it without expecting anything back.",
+    "fact": "The gut has its own extensive network of neurons called the enteric nervous system.",
+    "question": "What is one thing you are looking forward to? Keep it simple."
+  },
+  {
+    "clinicalWord": "Hemoptysis",
+    "clinicalDefinition": "Coughing up blood from the respiratory tract.",
+    "challenge": "Drink a full glass of water and do it slowly.",
+    "kindness": "Thank someone whose work often goes unnoticed. Make it genuine, not performative.",
+    "fact": "Your sense of flavor depends heavily on smell as well as taste.",
+    "question": "What is one thing you are looking forward to? Be specific."
+  },
+  {
+    "clinicalWord": "Hypotension",
+    "clinicalDefinition": "Blood pressure that is lower than expected or clinically significant.",
+    "challenge": "Drink a full glass of water without turning it into another job.",
+    "kindness": "Thank someone whose work often goes unnoticed. Small counts.",
+    "fact": "Humans blink thousands of times each day.",
+    "question": "What is one thing you are looking forward to? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Hypertension",
+    "clinicalDefinition": "Persistently elevated blood pressure.",
+    "challenge": "Drink a full glass of water and stop when the timer ends.",
+    "kindness": "Thank someone whose work often goes unnoticed. Do it quietly.",
+    "fact": "Height can vary slightly from morning to evening as spinal discs compress.",
+    "question": "What is one thing you are looking forward to? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Orthostatic",
+    "clinicalDefinition": "Related to standing upright; often used in 'orthostatic hypotension.'",
+    "challenge": "Drink a full glass of water while paying attention to how you feel.",
+    "kindness": "Thank someone whose work often goes unnoticed. Let it be enough.",
+    "fact": "Your body temperature naturally changes across the day.",
+    "question": "What is one thing you are looking forward to? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "Pallor",
+    "clinicalDefinition": "Unusual paleness of the skin or mucous membranes.",
+    "challenge": "Drink a full glass of water without posting it anywhere.",
+    "kindness": "Offer help before someone has to ask.",
+    "fact": "Your dominant hand is controlled mainly by the opposite cerebral hemisphere.",
+    "question": "What is one thing you are looking forward to? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Syncope",
+    "clinicalDefinition": "A temporary loss of consciousness caused by a brief reduction in blood flow to the brain.",
+    "challenge": "Drink a full glass of water and leave your phone behind.",
+    "kindness": "Offer help before someone has to ask. Keep it simple.",
+    "fact": "The blind spot in each eye occurs where the optic nerve exits the retina.",
+    "question": "What is one thing you are looking forward to? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Tachycardia",
+    "clinicalDefinition": "A heart rate faster than expected for the person and situation.",
+    "challenge": "Drink a full glass of water just because it might feel good.",
+    "kindness": "Offer help before someone has to ask. Be specific.",
+    "fact": "Your brain usually fills in your visual blind spot so you do not notice it.",
+    "question": "What did you do well today?"
+  },
+  {
+    "clinicalWord": "Tachypnea",
+    "clinicalDefinition": "A breathing rate faster than expected.",
+    "challenge": "Drink a full glass of water and notice one detail you usually miss.",
+    "kindness": "Offer help before someone has to ask. Do it without expecting anything back.",
+    "fact": "Peripheral vision is better at detecting motion than fine detail.",
+    "question": "What did you do well today? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Bradypnea",
+    "clinicalDefinition": "A breathing rate slower than expected.",
+    "challenge": "Stretch your neck and shoulders for two minutes —no headphones.",
+    "kindness": "Offer help before someone has to ask. Make it genuine, not performative.",
+    "fact": "Rods in the retina are more sensitive in low light than cones.",
+    "question": "What did you do well today? Keep it simple."
+  },
+  {
+    "clinicalWord": "Hypoxia",
+    "clinicalDefinition": "Inadequate oxygen available to body tissues.",
+    "challenge": "Stretch your neck and shoulders for two minutes —no multitasking.",
+    "kindness": "Offer help before someone has to ask. Small counts.",
+    "fact": "Humans typically have three types of cone photoreceptors for color vision.",
+    "question": "What did you do well today? Be specific."
+  },
+  {
+    "clinicalWord": "Hypoxemia",
+    "clinicalDefinition": "Lower-than-normal oxygen level in arterial blood.",
+    "challenge": "Stretch your neck and shoulders for two minutes and do it slowly.",
+    "kindness": "Offer help before someone has to ask. Do it quietly.",
+    "fact": "The cochlea turns mechanical vibration into nerve signals.",
+    "question": "What did you do well today? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Anuria",
+    "clinicalDefinition": "Very little to no urine production.",
+    "challenge": "Stretch your neck and shoulders for two minutes without turning it into another job.",
+    "kindness": "Offer help before someone has to ask. Let it be enough.",
+    "fact": "The vestibular system in the inner ear helps maintain balance and spatial orientation.",
+    "question": "What did you do well today? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Oliguria",
+    "clinicalDefinition": "Urine output lower than expected.",
+    "challenge": "Stretch your neck and shoulders for two minutes and stop when the timer ends.",
+    "kindness": "Ask someone how they are doing and actually listen.",
+    "fact": "Proprioception helps you know where your body parts are without looking at them.",
+    "question": "What did you do well today? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "Polyuria",
+    "clinicalDefinition": "Excessive urine production.",
+    "challenge": "Stretch your neck and shoulders for two minutes while paying attention to how you feel.",
+    "kindness": "Ask someone how they are doing and actually listen. Keep it simple.",
+    "fact": "Saliva begins digestion and helps protect the mouth.",
+    "question": "What did you do well today? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Dysuria",
+    "clinicalDefinition": "Painful or difficult urination.",
+    "challenge": "Stretch your neck and shoulders for two minutes without posting it anywhere.",
+    "kindness": "Ask someone how they are doing and actually listen. Be specific.",
+    "fact": "Bone marrow produces blood cells.",
+    "question": "What did you do well today? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Nocturia",
+    "clinicalDefinition": "Waking at night to urinate.",
+    "challenge": "Stretch your neck and shoulders for two minutes and leave your phone behind.",
+    "kindness": "Ask someone how they are doing and actually listen. Do it without expecting anything back.",
+    "fact": "The spleen helps filter blood and participates in immune function.",
+    "question": "What made today easier?"
+  },
+  {
+    "clinicalWord": "Incontinence",
+    "clinicalDefinition": "Involuntary loss of urine or stool.",
+    "challenge": "Stretch your neck and shoulders for two minutes just because it might feel good.",
+    "kindness": "Ask someone how they are doing and actually listen. Make it genuine, not performative.",
+    "fact": "The kidneys help regulate electrolytes, acid-base balance, and blood pressure as well as producing urine.",
+    "question": "What made today easier? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Constipation",
+    "clinicalDefinition": "Infrequent or difficult passage of stool.",
+    "challenge": "Stretch your neck and shoulders for two minutes and notice one detail you usually miss.",
+    "kindness": "Ask someone how they are doing and actually listen. Small counts.",
+    "fact": "The pancreas has both digestive and hormone-producing functions.",
+    "question": "What made today easier? Keep it simple."
+  },
+  {
+    "clinicalWord": "Diarrhea",
+    "clinicalDefinition": "Frequent loose or watery stools.",
+    "challenge": "Step outside for five minutes —no headphones.",
+    "kindness": "Ask someone how they are doing and actually listen. Do it quietly.",
+    "fact": "The liver performs hundreds of metabolic functions.",
+    "question": "What made today easier? Be specific."
+  },
+  {
+    "clinicalWord": "Melena",
+    "clinicalDefinition": "Black, tarry stool caused by digested blood, usually from the upper gastrointestinal tract.",
+    "challenge": "Step outside for five minutes —no multitasking.",
+    "kindness": "Ask someone how they are doing and actually listen. Let it be enough.",
+    "fact": "Bile is made by the liver and stored in the gallbladder.",
+    "question": "What made today easier? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Hematochezia",
+    "clinicalDefinition": "Passage of bright red or maroon blood from the rectum.",
+    "challenge": "Step outside for five minutes and do it slowly.",
+    "kindness": "Send a quick message to someone you appreciate.",
+    "fact": "The small intestine is the main site of nutrient absorption.",
+    "question": "What made today easier? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Nausea",
+    "clinicalDefinition": "The sensation of needing to vomit.",
+    "challenge": "Step outside for five minutes without turning it into another job.",
+    "kindness": "Send a quick message to someone you appreciate. Keep it simple.",
+    "fact": "The large intestine absorbs water and contains dense microbial communities.",
+    "question": "What made today easier? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "Emesis",
+    "clinicalDefinition": "Vomiting.",
+    "challenge": "Step outside for five minutes and stop when the timer ends.",
+    "kindness": "Send a quick message to someone you appreciate. Be specific.",
+    "fact": "The appendix contains immune tissue and may help support gut microbial communities.",
+    "question": "What made today easier? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Distention",
+    "clinicalDefinition": "Abnormal enlargement or swelling of an area, such as the abdomen.",
+    "challenge": "Step outside for five minutes while paying attention to how you feel.",
+    "kindness": "Send a quick message to someone you appreciate. Do it without expecting anything back.",
+    "fact": "Capillaries have extremely thin walls that support exchange of gases, nutrients, and waste.",
+    "question": "What made today easier? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Ascites",
+    "clinicalDefinition": "Abnormal accumulation of fluid in the abdominal cavity.",
+    "challenge": "Step outside for five minutes without posting it anywhere.",
+    "kindness": "Send a quick message to someone you appreciate. Make it genuine, not performative.",
+    "fact": "Veins can contain valves that help return blood toward the heart.",
+    "question": "Who made your day better?"
+  },
+  {
+    "clinicalWord": "Jaundice",
+    "clinicalDefinition": "Yellowing of the skin or eyes caused by elevated bilirubin.",
+    "challenge": "Step outside for five minutes and leave your phone behind.",
+    "kindness": "Send a quick message to someone you appreciate. Small counts.",
+    "fact": "The heart has its own intrinsic electrical conduction system.",
+    "question": "Who made your day better? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Pruritus",
+    "clinicalDefinition": "Itching.",
+    "challenge": "Step outside for five minutes just because it might feel good.",
+    "kindness": "Send a quick message to someone you appreciate. Do it quietly.",
+    "fact": "Blood pressure naturally varies with activity, stress, sleep, and time of day.",
+    "question": "Who made your day better? Keep it simple."
+  },
+  {
+    "clinicalWord": "Diaphoresis",
+    "clinicalDefinition": "Excessive or profuse sweating.",
+    "challenge": "Step outside for five minutes and notice one detail you usually miss.",
+    "kindness": "Send a quick message to someone you appreciate. Let it be enough.",
+    "fact": "Fever is a regulated increase in the body’s temperature set point.",
+    "question": "Who made your day better? Be specific."
+  },
+  {
+    "clinicalWord": "Ecchymosis",
+    "clinicalDefinition": "A larger area of skin discoloration caused by bleeding under the skin; commonly called a bruise.",
+    "challenge": "Eat one snack or meal without looking at a screen —no headphones.",
+    "kindness": "Give a genuine compliment unrelated to appearance.",
+    "fact": "Sweating cools the body mainly through evaporation.",
+    "question": "Who made your day better? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Petechiae",
+    "clinicalDefinition": "Tiny pinpoint red, purple, or brown spots caused by small amounts of bleeding under the skin.",
+    "challenge": "Eat one snack or meal without looking at a screen —no multitasking.",
+    "kindness": "Give a genuine compliment unrelated to appearance. Keep it simple.",
+    "fact": "Skin is an organ with multiple layers and important immune, sensory, and barrier functions.",
+    "question": "Who made your day better? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Purpura",
+    "clinicalDefinition": "Purple-colored spots or patches caused by bleeding under the skin.",
+    "challenge": "Eat one snack or meal without looking at a screen and do it slowly.",
+    "kindness": "Give a genuine compliment unrelated to appearance. Be specific.",
+    "fact": "Melanin helps protect skin cells from ultraviolet radiation.",
+    "question": "Who made your day better? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "Lesion",
+    "clinicalDefinition": "An area of abnormal or damaged tissue.",
+    "challenge": "Eat one snack or meal without looking at a screen without turning it into another job.",
+    "kindness": "Give a genuine compliment unrelated to appearance. Do it without expecting anything back.",
+    "fact": "Hair and nails are made largely of keratin.",
+    "question": "Who made your day better? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Ulcer",
+    "clinicalDefinition": "An open sore involving loss of skin or mucous membrane tissue.",
+    "challenge": "Eat one snack or meal without looking at a screen and stop when the timer ends.",
+    "kindness": "Give a genuine compliment unrelated to appearance. Make it genuine, not performative.",
+    "fact": "The human body contains trillions of microorganisms living on and inside it.",
+    "question": "Who made your day better? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Abrasion",
+    "clinicalDefinition": "A superficial scrape of the skin.",
+    "challenge": "Eat one snack or meal without looking at a screen while paying attention to how you feel.",
+    "kindness": "Give a genuine compliment unrelated to appearance. Small counts.",
+    "fact": "Memory is reconstructive rather than a perfect recording.",
+    "question": "What is one thing you learned today?"
+  },
+  {
+    "clinicalWord": "Laceration",
+    "clinicalDefinition": "A cut or tear in tissue.",
+    "challenge": "Eat one snack or meal without looking at a screen without posting it anywhere.",
+    "kindness": "Give a genuine compliment unrelated to appearance. Do it quietly.",
+    "fact": "Sleep supports memory consolidation.",
+    "question": "What is one thing you learned today? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Avulsion",
+    "clinicalDefinition": "An injury in which tissue is forcibly torn away.",
+    "challenge": "Eat one snack or meal without looking at a screen and leave your phone behind.",
+    "kindness": "Give a genuine compliment unrelated to appearance. Let it be enough.",
+    "fact": "Light exposure is one of the strongest signals for the circadian clock.",
+    "question": "What is one thing you learned today? Keep it simple."
+  },
+  {
+    "clinicalWord": "Contusion",
+    "clinicalDefinition": "A bruise caused by blunt force trauma.",
+    "challenge": "Eat one snack or meal without looking at a screen just because it might feel good.",
+    "kindness": "Let someone go ahead of you.",
+    "fact": "Dreaming can happen outside REM sleep as well as during REM.",
+    "question": "What is one thing you learned today? Be specific."
+  },
+  {
+    "clinicalWord": "Hematoma",
+    "clinicalDefinition": "A localized collection of blood outside a blood vessel.",
+    "challenge": "Eat one snack or meal without looking at a screen and notice one detail you usually miss.",
+    "kindness": "Let someone go ahead of you. Keep it simple.",
+    "fact": "Music can strongly cue autobiographical memories.",
+    "question": "What is one thing you learned today? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Crepitus",
+    "clinicalDefinition": "A crackling, grating, or popping sensation or sound felt or heard in tissues or joints.",
+    "challenge": "Take five slow breaths —no headphones.",
+    "kindness": "Let someone go ahead of you. Be specific.",
+    "fact": "Smell has close neural links with regions involved in emotion and memory.",
+    "question": "What is one thing you learned today? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Contracture",
+    "clinicalDefinition": "Permanent tightening or shortening of muscles, tendons, skin, or other tissues that limits movement.",
+    "challenge": "Take five slow breaths —no multitasking.",
+    "kindness": "Let someone go ahead of you. Do it without expecting anything back.",
+    "fact": "Your pupils change size not only with light but also with cognitive and emotional states.",
+    "question": "What is one thing you learned today? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "ROM",
+    "clinicalDefinition": "Range of motion: the extent to which a joint can move.",
+    "challenge": "Take five slow breaths and do it slowly.",
+    "kindness": "Let someone go ahead of you. Make it genuine, not performative.",
+    "fact": "Pain is produced by the nervous system and is not a simple meter of tissue damage.",
+    "question": "What is one thing you learned today? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Gait",
+    "clinicalDefinition": "A person’s pattern of walking.",
+    "challenge": "Take five slow breaths without turning it into another job.",
+    "kindness": "Let someone go ahead of you. Small counts.",
+    "fact": "Placebo effects can involve measurable physiological changes.",
+    "question": "What is one thing you learned today? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Antalgic gait",
+    "clinicalDefinition": "A walking pattern altered to reduce pain, usually by shortening time spent on the painful side.",
+    "challenge": "Take five slow breaths and stop when the timer ends.",
+    "kindness": "Let someone go ahead of you. Do it quietly.",
+    "fact": "Slow breathing can influence autonomic nervous-system activity.",
+    "question": "What would make today feel like a good day?"
+  },
+  {
+    "clinicalWord": "Hemiparesis",
+    "clinicalDefinition": "Weakness on one side of the body.",
+    "challenge": "Take five slow breaths while paying attention to how you feel.",
+    "kindness": "Let someone go ahead of you. Let it be enough.",
+    "fact": "Walking can support creative thinking for some people.",
+    "question": "What would make today feel like a good day? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Hemiplegia",
+    "clinicalDefinition": "Paralysis on one side of the body.",
+    "challenge": "Take five slow breaths without posting it anywhere.",
+    "kindness": "Make one small task easier for someone else.",
+    "fact": "Exercise can produce short-term changes in mood and cognition.",
+    "question": "What would make today feel like a good day? Keep it simple."
+  },
+  {
+    "clinicalWord": "Paraplegia",
+    "clinicalDefinition": "Paralysis affecting both legs and usually the lower body.",
+    "challenge": "Take five slow breaths and leave your phone behind.",
+    "kindness": "Make one small task easier for someone else. Keep it simple.",
+    "fact": "Neurons communicate electrically within cells and chemically across many synapses.",
+    "question": "What would make today feel like a good day? Be specific."
+  },
+  {
+    "clinicalWord": "Quadriplegia",
+    "clinicalDefinition": "Paralysis affecting all four limbs; also called tetraplegia.",
+    "challenge": "Take five slow breaths just because it might feel good.",
+    "kindness": "Make one small task easier for someone else. Be specific.",
+    "fact": "Myelin helps nerve signals travel efficiently.",
+    "question": "What would make today feel like a good day? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Paresis",
+    "clinicalDefinition": "Partial loss of voluntary movement or muscle weakness.",
+    "challenge": "Take five slow breaths and notice one detail you usually miss.",
+    "kindness": "Make one small task easier for someone else. Do it without expecting anything back.",
+    "fact": "The brain remains capable of structural and functional change throughout life.",
+    "question": "What would make today feel like a good day? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Paresthesia",
+    "clinicalDefinition": "An abnormal sensation such as tingling, prickling, or pins and needles.",
+    "challenge": "Stand up and move for three minutes —no headphones.",
+    "kindness": "Make one small task easier for someone else. Make it genuine, not performative.",
+    "fact": "The vagus nerve connects the brain with many organs in the chest and abdomen.",
+    "question": "What would make today feel like a good day? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "Neuropathy",
+    "clinicalDefinition": "Disease or dysfunction of one or more nerves.",
+    "challenge": "Stand up and move for three minutes —no multitasking.",
+    "kindness": "Make one small task easier for someone else. Small counts.",
+    "fact": "Dopamine has roles in movement, learning, motivation, and reward prediction—not just pleasure.",
+    "question": "What would make today feel like a good day? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Tremor",
+    "clinicalDefinition": "An involuntary rhythmic shaking movement.",
+    "challenge": "Stand up and move for three minutes and do it slowly.",
+    "kindness": "Make one small task easier for someone else. Do it quietly.",
+    "fact": "The amygdala is involved in emotional learning and salience, not simply fear.",
+    "question": "What would make today feel like a good day? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Spasticity",
+    "clinicalDefinition": "Abnormally increased muscle tone causing stiffness and resistance to movement.",
+    "challenge": "Stand up and move for three minutes without turning it into another job.",
+    "kindness": "Make one small task easier for someone else. Let it be enough.",
+    "fact": "The hippocampus is important for forming new episodic memories.",
+    "question": "What are you proud of from this week?"
+  },
+  {
+    "clinicalWord": "Rigidity",
+    "clinicalDefinition": "Increased resistance to passive movement that is not dependent on movement speed.",
+    "challenge": "Stand up and move for three minutes and stop when the timer ends.",
+    "kindness": "Share useful information with someone who could benefit.",
+    "fact": "Humans are unusually good at detecting faces, even in random visual patterns.",
+    "question": "What are you proud of from this week? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Dyskinesia",
+    "clinicalDefinition": "Abnormal involuntary movement.",
+    "challenge": "Stand up and move for three minutes while paying attention to how you feel.",
+    "kindness": "Share useful information with someone who could benefit. Keep it simple.",
+    "fact": "Familiar smells can fade from awareness through sensory adaptation.",
+    "question": "What are you proud of from this week? Keep it simple."
+  },
+  {
+    "clinicalWord": "Akinesia",
+    "clinicalDefinition": "Absence or marked reduction of voluntary movement.",
+    "challenge": "Stand up and move for three minutes without posting it anywhere.",
+    "kindness": "Share useful information with someone who could benefit. Be specific.",
+    "fact": "Sound travels faster through water than through air.",
+    "question": "What are you proud of from this week? Be specific."
+  },
+  {
+    "clinicalWord": "Bradykinesia",
+    "clinicalDefinition": "Slowness of movement.",
+    "challenge": "Stand up and move for three minutes and leave your phone behind.",
+    "kindness": "Share useful information with someone who could benefit. Do it without expecting anything back.",
+    "fact": "Lightning can heat nearby air to temperatures hotter than the surface of the Sun.",
+    "question": "What are you proud of from this week? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Dystonia",
+    "clinicalDefinition": "Sustained or repetitive muscle contractions causing twisting movements or abnormal postures.",
+    "challenge": "Stand up and move for three minutes just because it might feel good.",
+    "kindness": "Share useful information with someone who could benefit. Make it genuine, not performative.",
+    "fact": "Rainbows are full circles; from the ground we usually see only part of one.",
+    "question": "What are you proud of from this week? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Vertigo",
+    "clinicalDefinition": "A false sensation that you or the surroundings are moving or spinning.",
+    "challenge": "Stand up and move for three minutes and notice one detail you usually miss.",
+    "kindness": "Share useful information with someone who could benefit. Small counts.",
+    "fact": "Fog is essentially a cloud at ground level.",
+    "question": "What are you proud of from this week? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "Dizziness",
+    "clinicalDefinition": "A broad term that can include lightheadedness, imbalance, or vertigo.",
+    "challenge": "Read five pages of something you enjoy —no headphones.",
+    "kindness": "Share useful information with someone who could benefit. Do it quietly.",
+    "fact": "Thunder is caused by the rapid expansion of air heated by lightning.",
+    "question": "What are you proud of from this week? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Nystagmus",
+    "clinicalDefinition": "Involuntary repetitive eye movement.",
+    "challenge": "Read five pages of something you enjoy —no multitasking.",
+    "kindness": "Share useful information with someone who could benefit. Let it be enough.",
+    "fact": "The sky looks blue mainly because shorter wavelengths of sunlight scatter more strongly in the atmosphere.",
+    "question": "What are you proud of from this week? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Diplopia",
+    "clinicalDefinition": "Double vision.",
+    "challenge": "Read five pages of something you enjoy and do it slowly.",
+    "kindness": "Check in on a coworker who seems quieter than usual.",
+    "fact": "Sunsets often look redder because sunlight travels through more atmosphere.",
+    "question": "What is something small that you are grateful for?"
+  },
+  {
+    "clinicalWord": "Photophobia",
+    "clinicalDefinition": "Abnormal sensitivity or discomfort with light.",
+    "challenge": "Read five pages of something you enjoy without turning it into another job.",
+    "kindness": "Check in on a coworker who seems quieter than usual. Keep it simple.",
+    "fact": "The same side of the Moon usually faces Earth because the Moon is tidally locked.",
+    "question": "What is something small that you are grateful for? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Tinnitus",
+    "clinicalDefinition": "Perception of ringing or another sound without an external sound source.",
+    "challenge": "Read five pages of something you enjoy and stop when the timer ends.",
+    "kindness": "Check in on a coworker who seems quieter than usual. Be specific.",
+    "fact": "The far side of the Moon is not permanently dark.",
+    "question": "What is something small that you are grateful for? Keep it simple."
+  },
+  {
+    "clinicalWord": "Otalgia",
+    "clinicalDefinition": "Ear pain.",
+    "challenge": "Read five pages of something you enjoy while paying attention to how you feel.",
+    "kindness": "Check in on a coworker who seems quieter than usual. Do it without expecting anything back.",
+    "fact": "Seasons are caused mainly by Earth’s axial tilt, not by its changing distance from the Sun.",
+    "question": "What is something small that you are grateful for? Be specific."
+  },
+  {
+    "clinicalWord": "Epistaxis",
+    "clinicalDefinition": "A nosebleed.",
+    "challenge": "Read five pages of something you enjoy without posting it anywhere.",
+    "kindness": "Check in on a coworker who seems quieter than usual. Make it genuine, not performative.",
+    "fact": "Sunlight takes about eight minutes to reach Earth.",
+    "question": "What is something small that you are grateful for? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Rhinorrhea",
+    "clinicalDefinition": "Nasal discharge; commonly called a runny nose.",
+    "challenge": "Read five pages of something you enjoy and leave your phone behind.",
+    "kindness": "Check in on a coworker who seems quieter than usual. Small counts.",
+    "fact": "The Moon is slowly moving away from Earth by a few centimetres each year.",
+    "question": "What is something small that you are grateful for? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Dysarthria",
+    "clinicalDefinition": "Difficulty speaking clearly due to impaired control of the speech muscles.",
+    "challenge": "Read five pages of something you enjoy just because it might feel good.",
+    "kindness": "Check in on a coworker who seems quieter than usual. Do it quietly.",
+    "fact": "The Sun contains more than 99% of the solar system’s mass.",
+    "question": "What is something small that you are grateful for? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "Dysphonia",
+    "clinicalDefinition": "Impaired voice quality, such as hoarseness.",
+    "challenge": "Read five pages of something you enjoy and notice one detail you usually miss.",
+    "kindness": "Check in on a coworker who seems quieter than usual. Let it be enough.",
+    "fact": "Objects in orbit are continuously falling around the body they orbit.",
+    "question": "What is something small that you are grateful for? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Agnosia",
+    "clinicalDefinition": "Inability to recognize familiar objects, people, sounds, or other stimuli despite intact sensation.",
+    "challenge": "Go to bed 15 minutes earlier —no headphones.",
+    "kindness": "Acknowledge someone’s effort, not just the result.",
+    "fact": "Most meteors burn up in the atmosphere before reaching the ground.",
+    "question": "What is something small that you are grateful for? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Apraxia",
+    "clinicalDefinition": "Difficulty performing a learned purposeful movement despite having the strength and understanding to do it.",
+    "challenge": "Go to bed 15 minutes earlier —no multitasking.",
+    "kindness": "Acknowledge someone’s effort, not just the result. Keep it simple.",
+    "fact": "A meteorite is a space rock that reaches the ground.",
+    "question": "What gave you energy today?"
+  },
+  {
+    "clinicalWord": "Anosmia",
+    "clinicalDefinition": "Loss of the sense of smell.",
+    "challenge": "Go to bed 15 minutes earlier and do it slowly.",
+    "kindness": "Acknowledge someone’s effort, not just the result. Be specific.",
+    "fact": "Venus rotates in the opposite direction from most planets.",
+    "question": "What gave you energy today? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Ageusia",
+    "clinicalDefinition": "Loss of the sense of taste.",
+    "challenge": "Go to bed 15 minutes earlier without turning it into another job.",
+    "kindness": "Acknowledge someone’s effort, not just the result. Do it without expecting anything back.",
+    "fact": "A day on Venus is longer than a year on Venus.",
+    "question": "What gave you energy today? Keep it simple."
+  },
+  {
+    "clinicalWord": "Somnolence",
+    "clinicalDefinition": "Abnormal drowsiness or sleepiness.",
+    "challenge": "Go to bed 15 minutes earlier and stop when the timer ends.",
+    "kindness": "Acknowledge someone’s effort, not just the result. Make it genuine, not performative.",
+    "fact": "Uranus rotates on its side compared with most planets.",
+    "question": "What gave you energy today? Be specific."
+  },
+  {
+    "clinicalWord": "Lethargy",
+    "clinicalDefinition": "Reduced alertness, energy, or responsiveness.",
+    "challenge": "Go to bed 15 minutes earlier while paying attention to how you feel.",
+    "kindness": "Acknowledge someone’s effort, not just the result. Small counts.",
+    "fact": "Mars has the solar system’s largest known volcano, Olympus Mons.",
+    "question": "What gave you energy today? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Obtundation",
+    "clinicalDefinition": "Reduced alertness with slowed responses to stimulation.",
+    "challenge": "Go to bed 15 minutes earlier without posting it anywhere.",
+    "kindness": "Acknowledge someone’s effort, not just the result. Do it quietly.",
+    "fact": "Saturn’s average density is lower than water.",
+    "question": "What gave you energy today? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Stupor",
+    "clinicalDefinition": "A state of markedly reduced responsiveness in which strong stimulation is needed to elicit a response.",
+    "challenge": "Go to bed 15 minutes earlier and leave your phone behind.",
+    "kindness": "Acknowledge someone’s effort, not just the result. Let it be enough.",
+    "fact": "Neptune was predicted mathematically before it was directly observed.",
+    "question": "What gave you energy today? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "Coma",
+    "clinicalDefinition": "A state of unarousable unconsciousness.",
+    "challenge": "Go to bed 15 minutes earlier just because it might feel good.",
+    "kindness": "Hold the door or elevator for someone.",
+    "fact": "The Milky Way and Andromeda galaxies are moving toward each other.",
+    "question": "What gave you energy today? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Orientation",
+    "clinicalDefinition": "Awareness of person, place, time, and situation.",
+    "challenge": "Go to bed 15 minutes earlier and notice one detail you usually miss.",
+    "kindness": "Hold the door or elevator for someone. Keep it simple.",
+    "fact": "Looking far into space is also looking into the past because light takes time to travel.",
+    "question": "What gave you energy today? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Cognition",
+    "clinicalDefinition": "Mental processes involved in thinking, memory, understanding, and judgment.",
+    "challenge": "Put your phone away for ten minutes —no headphones.",
+    "kindness": "Hold the door or elevator for someone. Be specific.",
+    "fact": "The universe is expanding.",
+    "question": "What drained your energy today?"
+  },
+  {
+    "clinicalWord": "Amnesia",
+    "clinicalDefinition": "Partial or complete loss of memory.",
+    "challenge": "Put your phone away for ten minutes —no multitasking.",
+    "kindness": "Hold the door or elevator for someone. Do it without expecting anything back.",
+    "fact": "Octopuses have three hearts.",
+    "question": "What drained your energy today? Answer with the first thing that comes to mind."
+  },
+  {
+    "clinicalWord": "Confusion",
+    "clinicalDefinition": "Impaired clarity of thought, awareness, or understanding.",
+    "challenge": "Put your phone away for ten minutes and do it slowly.",
+    "kindness": "Hold the door or elevator for someone. Make it genuine, not performative.",
+    "fact": "Octopus blood is blue because it uses copper-rich hemocyanin to carry oxygen.",
+    "question": "What drained your energy today? Keep it simple."
+  },
+  {
+    "clinicalWord": "Delusion",
+    "clinicalDefinition": "A fixed false belief that persists despite evidence to the contrary.",
+    "challenge": "Put your phone away for ten minutes without turning it into another job.",
+    "kindness": "Hold the door or elevator for someone. Small counts.",
+    "fact": "A large proportion of an octopus’s neurons are located in its arms.",
+    "question": "What drained your energy today? Be specific."
+  },
+  {
+    "clinicalWord": "Hallucination",
+    "clinicalDefinition": "A sensory perception occurring without an external stimulus.",
+    "challenge": "Put your phone away for ten minutes and stop when the timer ends.",
+    "kindness": "Hold the door or elevator for someone. Do it quietly.",
+    "fact": "Crows can recognize individual human faces.",
+    "question": "What drained your energy today? Think of one concrete example."
+  },
+  {
+    "clinicalWord": "Affect",
+    "clinicalDefinition": "The observable expression of emotion.",
+    "challenge": "Put your phone away for ten minutes while paying attention to how you feel.",
+    "kindness": "Hold the door or elevator for someone. Let it be enough.",
+    "fact": "Ravens can solve multi-step problems.",
+    "question": "What drained your energy today? What detail makes your answer real?"
+  },
+  {
+    "clinicalWord": "Anxiety",
+    "clinicalDefinition": "A state of apprehension, worry, or fear that may include physical symptoms.",
+    "challenge": "Put your phone away for ten minutes without posting it anywhere.",
+    "kindness": "Leave a shared space better than you found it.",
+    "fact": "Some dolphins use distinctive signature whistles.",
+    "question": "What drained your energy today? No perfect answer needed."
+  },
+  {
+    "clinicalWord": "Agitation",
+    "clinicalDefinition": "Excessive motor or verbal activity often associated with distress or restlessness.",
+    "challenge": "Put your phone away for ten minutes and leave your phone behind.",
+    "kindness": "Leave a shared space better than you found it. Keep it simple.",
+    "fact": "Elephants can communicate using very low-frequency sounds.",
+    "question": "What drained your energy today? If you wrote one sentence about it, what would it be?"
+  },
+  {
+    "clinicalWord": "Restlessness",
+    "clinicalDefinition": "Difficulty remaining still or comfortable.",
+    "challenge": "Put your phone away for ten minutes just because it might feel good.",
+    "kindness": "Leave a shared space better than you found it. Be specific.",
+    "fact": "Bees communicate information about food sources through dances.",
+    "question": "What drained your energy today? Who or what comes to mind first?"
+  },
+  {
+    "clinicalWord": "Insomnia",
+    "clinicalDefinition": "Difficulty falling asleep, staying asleep, or obtaining restorative sleep.",
+    "challenge": "Put your phone away for ten minutes and notice one detail you usually miss.",
+    "kindness": "Leave a shared space better than you found it. Do it without expecting anything back.",
+    "fact": "Axolotls can regenerate limbs and parts of some organs.",
+    "question": "What is one thing you can leave at work today?"
+  }
+];
+
+const now = new Date();
+
+document.getElementById("todayDate").textContent =
+  now.toLocaleDateString("en-CA", {
+    weekday: "long",
+    month: "long",
+    day: "numeric"
+  });
+
+const startOfYear = new Date(now.getFullYear(), 0, 1);
+const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+const dayOfYear = Math.round((today - startOfYear) / 86400000);
+const dayIndex = dayOfYear % 100;
+
+const todayData = dailyRecords[dayIndex];
+
+document.getElementById("clinicalWord").textContent = todayData.clinicalWord;
+document.getElementById("clinicalDefinition").textContent = todayData.clinicalDefinition;
+document.getElementById("challenge").textContent = todayData.challenge;
+document.getElementById("kindness").textContent = todayData.kindness;
+document.getElementById("fact").textContent = todayData.fact;
+document.getElementById("question").textContent = todayData.question;
+</script>
+
+</body>
+</html>
