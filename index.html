@@ -974,6 +974,323 @@ const dailyRecords = [
     "question": "What is one thing you can leave at work today?"
   }
 ];
+/* =========================================================
+   DAILY TAP — NEW CONTENT BANKS
+   ========================================================= */
+
+const challenges = [
+  "Try to roll your tongue into a taco.",
+  "Eat something you've never tried before.",
+  "Write your name with your non-dominant hand.",
+  "Try to stand on one foot for 30 seconds.",
+  "Learn how to say “thank you” in a language you don't know.",
+  "Listen to a song from a genre you normally wouldn't choose.",
+  "Try to wiggle one eyebrow without moving the other.",
+  "Take a different route somewhere familiar.",
+  "Draw a cat without lifting your pen from the paper.",
+  "Try a fruit you normally walk past at the grocery store.",
+  "Say the alphabet backward as far as you can.",
+  "Ask someone to recommend a song and actually listen to it.",
+  "Try to whistle with your fingers.",
+  "Look up what your first name means.",
+  "Sit somewhere you normally don't sit.",
+  "Try a food combination that sounds questionable but harmless.",
+  "Take a ten-minute walk.",
+  "Draw something using your non-dominant hand.",
+  "Learn one completely useless fact.",
+  "Listen to a song you loved when you were 15.",
+  "Try to snap with the hand you normally don't use.",
+  "Find a country on a map that you couldn't point to yesterday.",
+  "Try a stretch you've never done before.",
+  "Order or make something you normally wouldn't choose.",
+  "Take one photograph today that you genuinely like.",
+  "Try to remember every elementary-school teacher you had.",
+  "Use your non-dominant hand for one ordinary task.",
+  "Ask someone to teach you something they're weirdly good at.",
+  "Try to wink with your less cooperative eye.",
+  "Find out why something in your house was invented.",
+  "Walk heel-to-toe across the room like you're on a balance beam.",
+  "Try a new flavor of something you already like.",
+  "Write a six-word story.",
+  "Remember the first phone number you ever memorized.",
+  "Say hello first today.",
+  "Learn the name of one constellation.",
+  "Try to touch your nose with your tongue.",
+  "Spend ten minutes doing something you always say you're too busy to do.",
+  "Eat something using chopsticks that you normally wouldn't.",
+  "Listen to the first song that comes on without skipping it.",
+  "Try to balance a spoon on your nose.",
+  "Look up the origin of a phrase you say all the time.",
+  "Do ten slow squats if that's comfortable for you.",
+  "Find a snack you haven't eaten since childhood.",
+  "Doodle for two minutes without deciding what you're drawing.",
+  "Ask someone what food they think everyone should try once.",
+  "Try to remember the layout of your childhood bedroom.",
+  "Take the stairs once today if you safely can.",
+  "Learn a word you've never heard before.",
+  "Wear something you haven't worn in a long time.",
+  "Try a food from a country you've never visited.",
+  "Walk backward for ten safe steps.",
+  "Make up a ridiculous name for an imaginary restaurant.",
+  "Ask someone what they're currently obsessed with.",
+  "Try to remember what you wanted to be when you grew up.",
+  "Stand on one foot with your eyes closed somewhere safe.",
+  "Find out what bird you keep seeing around your neighborhood.",
+  "Do one ordinary thing in a completely different order.",
+  "Try to make a paper airplane from memory.",
+  "Ask someone what show they wish they could watch again for the first time.",
+  "Taste something you think you dislike and see if you still do.",
+  "Try to draw a recognizable face in 30 seconds.",
+  "Listen to a song in a language you don't understand.",
+  "Choose something harmless today by flipping a coin.",
+  "Try to remember the first movie you saw in a theatre.",
+  "Stretch your neck and shoulders for two minutes.",
+  "Find one object in your home you've never really examined.",
+  "Try to write one sentence backward.",
+  "Let someone else choose the music.",
+  "Learn what one symbol on your car dashboard actually means.",
+  "Try to make a perfect circle freehand.",
+  "Ask someone what their most controversial harmless opinion is.",
+  "Try an ingredient you've never cooked with.",
+  "Do one thing today before you feel completely ready.",
+  "Remember the first thing you bought with your own money.",
+  "Find five things around you that are the same color.",
+  "Try to hum a song and see if someone can identify it.",
+  "Look up how old the oldest building in your town is.",
+  "Eat one meal somewhere different from where you normally eat.",
+  "Try to name all seven continents without pausing.",
+  "Use a word today that you haven't used in a long time.",
+  "Try to fold a piece of paper into something without instructions.",
+  "Ask someone what their favorite childhood snack was.",
+  "Spend five minutes outside just looking around.",
+  "Try to name ten countries beginning with different letters.",
+  "Put together an outfit using something you usually ignore.",
+  "Try to remember the theme song from a childhood TV show.",
+  "Learn one sentence in sign language.",
+  "Try to draw your house from memory.",
+  "Taste one familiar food slowly enough to notice something new about it.",
+  "Try tossing a small object from one hand to the other ten times without dropping it.",
+  "Look up the meaning of a word you've been pretending you understand.",
+  "Listen to a song released before you were born.",
+  "Try brushing your teeth with your non-dominant hand.",
+  "Ask someone what skill they wish they had.",
+  "Try to name every month backward.",
+  "Find something you've owned for more than ten years.",
+  "Do one harmless thing differently just because you can.",
+  "Learn the capital of a country you know almost nothing about.",
+  "Try something today that makes you say, “I've never done that before.”"
+];
+
+
+const kindnessPrompts = [
+  "Let someone go ahead of you.",
+  "Smile at a stranger.",
+  "Hold the door for someone.",
+  "If it's comfortably within your budget, pay for someone's coffee.",
+  "Return a shopping cart that isn't yours.",
+  "Tell someone one specific thing you appreciate about them.",
+  "Let another driver merge in front of you.",
+  "Make someone a coffee or tea.",
+  "Send someone a photo you know will make them laugh.",
+  "Give someone the better seat.",
+  "Ask someone what their mother's name is.",
+  "Bring someone a snack they like.",
+  "Refill something you didn't empty.",
+  "Text someone you haven't talked to in a while just to say hi.",
+  "Let someone else choose the music.",
+  "Ask someone what they wanted to be when they grew up.",
+  "Pick up something someone dropped.",
+  "Leave a slightly bigger tip than usual if you comfortably can.",
+  "Tell someone they did a good job — and say exactly what they did well.",
+  "Ask someone what their favorite childhood toy was.",
+  "Do one small chore before anyone has to ask.",
+  "Give someone a genuine compliment unrelated to appearance.",
+  "Ask someone what their first job was.",
+  "Bring someone water without being asked.",
+  "Send someone a song that reminds you of them.",
+  "Leave the closest parking spot for someone else.",
+  "Ask someone what their grandmother used to cook.",
+  "Put something away even though you weren't the one who left it out.",
+  "Thank someone whose work usually goes unnoticed.",
+  "Ask someone what their childhood bedroom looked like.",
+  "If you're getting food or coffee, ask someone if they want anything.",
+  "Tell someone you were thinking about them.",
+  "Let someone with fewer items go ahead of you in line.",
+  "Ask someone what their favorite cartoon was as a kid.",
+  "Give away something useful that you no longer need.",
+  "Clean one shared thing everybody uses.",
+  "Tell someone about a good memory you have with them.",
+  "Ask someone what song reminds them of being a teenager.",
+  "Offer to carry something for someone.",
+  "Leave a good review for a small business you genuinely like.",
+  "Share the last piece instead of automatically taking it.",
+  "Ask someone what the first thing they bought with their own money was.",
+  "Send an old photograph to someone who was there.",
+  "Move out of someone's way before they have to ask.",
+  "Tell someone something kind about them when they're not expecting it.",
+  "Ask someone what food they hated as a child.",
+  "Replace the empty roll.",
+  "Offer someone your place in line if they seem rushed.",
+  "Recommend someone's work or business to another person.",
+  "Ask someone what their childhood nickname was.",
+  "Make one annoying little task easier for the next person.",
+  "Call someone who might be happy to hear your voice.",
+  "Ask someone where their parents grew up.",
+  "Pick up a piece of litter that isn't yours.",
+  "Give someone the best portion.",
+  "Ask someone what they used to do after school as a kid.",
+  "Share useful information with someone who could benefit from it.",
+  "Tell someone something they taught you.",
+  "Offer help before someone asks.",
+  "Ask someone what their favorite birthday memory is.",
+  "Leave a shared space slightly better than you found it.",
+  "Ask someone what their first car was.",
+  "Buy a small treat for someone for no particular reason if you can.",
+  "Tell someone you noticed their effort.",
+  "Ask someone what their favorite family tradition was growing up.",
+  "Give someone your full attention for five minutes.",
+  "Share something you have plenty of.",
+  "Ask someone what they were like in school.",
+  "Introduce two people who might enjoy knowing each other.",
+  "Tell someone why you're glad you know them.",
+  "Give someone a book you think they'd genuinely enjoy.",
+  "Ask someone what smell reminds them of childhood.",
+  "Let someone else have the last word in a harmless disagreement.",
+  "Offer to take a photo for a group so everyone can be in it.",
+  "Ask someone the name of their childhood best friend.",
+  "Send someone a meme specifically chosen for them.",
+  "Thank someone for something you normally take for granted.",
+  "Ask someone what their favorite school subject was.",
+  "Give someone credit for their idea.",
+  "Make room for someone to join a conversation.",
+  "Ask someone what their parents called them when they were little.",
+  "Tell somebody that something they said stuck with you.",
+  "Hold the elevator.",
+  "Ask someone where they went on their first trip.",
+  "Put something back where it belongs for the next person.",
+  "Ask someone what they thought adulthood would be like.",
+  "Share an umbrella if the opportunity comes up.",
+  "Tell someone about a quality in them that you admire.",
+  "Ask someone what they remember about their first home.",
+  "Offer the more comfortable chair.",
+  "Ask someone what their mother or father was like when they were young.",
+  "Message someone on their birthday even if social media didn't remind you.",
+  "Ask someone what they used to collect as a kid.",
+  "Give someone space to finish what they're saying without interrupting.",
+  "Ask someone what meal tastes like home to them.",
+  "Do something thoughtful without announcing that you did it.",
+  "Ask someone what they miss about being younger.",
+  "Share a recommendation you think someone would genuinely enjoy.",
+  "Ask someone a question about their life you've never thought to ask.",
+  "Make one person's day a tiny bit easier."
+];
+
+
+const dailyQuestions = [
+  "What made you laugh today?",
+  "What are you looking forward to right now?",
+  "What did you do well today?",
+  "What made today easier?",
+  "Who made your day better?",
+  "What is one thing you learned today?",
+  "What would make today feel like a good day?",
+  "What are you proud of from this week?",
+  "What is something small you're grateful for today?",
+  "What gave you energy today?",
+  "What drained your energy today?",
+  "What is something you can leave at work today?",
+  "What is something you wish you had more time for?",
+  "What was the best thing you ate recently?",
+  "Who haven't you talked to in a while?",
+  "What song have you had stuck in your head lately?",
+  "What are you currently curious about?",
+  "What is something you used to love doing?",
+  "What is one thing you don't want to forget about today?",
+  "What felt surprisingly easy today?",
+  "What felt harder than it should have today?",
+  "What is something you've changed your mind about?",
+  "What is something you know now that you didn't know a year ago?",
+  "What smell immediately reminds you of somewhere else?",
+  "What food tastes like childhood to you?",
+  "Who was your favorite teacher and why?",
+  "What did you want to be when you were eight?",
+  "What's something your younger self would think is cool about your life now?",
+  "What is a small luxury you really enjoy?",
+  "What ordinary thing makes your life noticeably better?",
+  "When was the last time you did something for the first time?",
+  "What's a harmless opinion you'll defend forever?",
+  "What is a skill you wish you had?",
+  "What's something you could talk about for an hour with no preparation?",
+  "What's one thing you are better at than most people realize?",
+  "What's something you don't mind spending money on?",
+  "What's something you hate spending money on?",
+  "Which room in your home feels most like you?",
+  "What is your favorite time of day?",
+  "What weather makes you happiest?",
+  "What song reminds you of being a teenager?",
+  "What is the oldest thing you own?",
+  "What is something you kept for sentimental reasons?",
+  "What's a place you would happily visit again?",
+  "What's somewhere you've never been but think you'd love?",
+  "What is one meal you could eat every week?",
+  "What is something you tried once and never need to try again?",
+  "What is something you thought you'd dislike but ended up loving?",
+  "Who makes you laugh the easiest?",
+  "What is the nicest thing someone has done for you recently?",
+  "What is a compliment you still remember?",
+  "What is something you wish people asked you about more often?",
+  "What is something you've gotten better at saying no to?",
+  "What is something you've gotten better at saying yes to?",
+  "What is one decision you're glad you made?",
+  "What is something you're procrastinating?",
+  "What tiny task would make tomorrow easier?",
+  "What is something you don't need to solve today?",
+  "What is one thing you'd like to remember next week?",
+  "What is currently taking up more mental space than it deserves?",
+  "What is one thing you could make simpler?",
+  "What have you done lately purely because you enjoyed it?",
+  "What was your favorite toy as a child?",
+  "What was your favorite childhood snack?",
+  "What did your childhood bedroom look like?",
+  "What TV show did you rush home to watch?",
+  "What was the first CD, cassette, or album you remember owning?",
+  "What was your first job?",
+  "What was your first phone like?",
+  "What's the earliest phone number you still remember?",
+  "What did your family eat on special occasions?",
+  "What is something your mother used to say a lot?",
+  "What is something your father used to say a lot?",
+  "Who was your childhood best friend?",
+  "What did you do during summer vacation as a kid?",
+  "What is the first birthday you clearly remember?",
+  "What did you think was incredibly cool when you were ten?",
+  "What did you think adults understood that you now realize they didn't?",
+  "What is something from the past you'd bring back?",
+  "What is something from the past you're very glad is gone?",
+  "If you could instantly master one skill, what would you choose?",
+  "If you had an unexpected free afternoon, what would you actually do?",
+  "If someone handed you a plane ticket for tomorrow, where would you go?",
+  "If you could eat dinner with your 15-year-old self, what would surprise them most?",
+  "If you could relive one ordinary day, which one would you choose?",
+  "If you had to eat one cuisine for a month, what would you pick?",
+  "If you could keep only five apps on your phone, which would survive?",
+  "If you had to teach a class tomorrow, what could you teach?",
+  "If you could know the full history of one object you own, what would you choose?",
+  "If you could ask your grandmother one question, what would it be?",
+  "What is something beautiful you noticed recently?",
+  "What did you almost overlook today?",
+  "What is one thing that feels different about your life lately?",
+  "Who would you like to know better?",
+  "What conversation have you been meaning to have?",
+  "What is one thing you're excited to teach someone someday?",
+  "What do you hope people feel when they're around you?",
+  "What is one thing you'd like to be remembered for?",
+  "What was one tiny moment today that was actually pretty good?",
+  "Right now, what matters most?"
+];
+
+
+/* ---------- DATE ---------- */
 
 const now = new Date();
 
@@ -984,19 +1301,57 @@ document.getElementById("todayDate").textContent =
     day: "numeric"
   });
 
-const startOfYear = new Date(now.getFullYear(), 0, 1);
-const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-const dayOfYear = Math.round((today - startOfYear) / 86400000);
-const dayIndex = dayOfYear % 100;
+const today = new Date(
+  now.getFullYear(),
+  now.getMonth(),
+  now.getDate()
+);
 
-const todayData = dailyRecords[dayIndex];
+const dayNumber = Math.floor(today.getTime() / 86400000);
 
-document.getElementById("clinicalWord").textContent = todayData.clinicalWord;
-document.getElementById("clinicalDefinition").textContent = todayData.clinicalDefinition;
-document.getElementById("challenge").textContent = todayData.challenge;
-document.getElementById("kindness").textContent = todayData.kindness;
-document.getElementById("fact").textContent = todayData.fact;
-document.getElementById("question").textContent = todayData.question;
+
+/* ---------- PICK TODAY'S CONTENT ---------- */
+
+function dailyIndex(length, offset) {
+  return ((dayNumber + offset) % length + length) % length;
+}
+
+const clinical =
+  dailyRecords[dailyIndex(dailyRecords.length, 0)];
+
+const challenge =
+  challenges[dailyIndex(challenges.length, 17)];
+
+const kindness =
+  kindnessPrompts[dailyIndex(kindnessPrompts.length, 43)];
+
+const factRecord =
+  dailyRecords[dailyIndex(dailyRecords.length, 71)];
+
+const question =
+  dailyQuestions[dailyIndex(dailyQuestions.length, 89)];
+
+
+/* ---------- DISPLAY ---------- */
+
+document.getElementById("clinicalWord").textContent =
+  clinical.clinicalWord;
+
+document.getElementById("clinicalDefinition").textContent =
+  clinical.clinicalDefinition;
+
+document.getElementById("challenge").textContent =
+  challenge;
+
+document.getElementById("kindness").textContent =
+  kindness;
+
+document.getElementById("fact").textContent =
+  factRecord.fact;
+
+document.getElementById("question").textContent =
+  question;
+
 </script>
 
 </body>
