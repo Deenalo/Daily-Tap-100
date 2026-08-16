@@ -1310,28 +1310,46 @@ const today = new Date(
 const dayNumber = Math.floor(today.getTime() / 86400000);
 
 
-/* ---------- PICK TODAY'S CONTENT ---------- */
+/* =========================================================
+   100-DAY SEASONS
 
-function dailyIndex(length, offset) {
-  return ((dayNumber + offset) % length + length) % length;
-}
+   Every category appears exactly once during each
+   100-day season.
+
+   After 100 days, each category starts at a new point,
+   creating new combinations automatically.
+   ========================================================= */
+
+const dayInSeason = ((dayNumber % 100) + 100) % 100;
+const season = Math.floor(dayNumber / 100);
+
+
+/* Different starting point for every category and season */
+
+const clinicalOffset = (6 + season * 37) % 100;
+const challengeOffset = (23 + season * 53) % 100;
+const kindnessOffset = (49 + season * 61) % 100;
+const factOffset = (77 + season * 79) % 100;
+const questionOffset = (95 + season * 83) % 100;
+
+
+/* Pick today's item from each bank */
 
 const clinical =
-  dailyRecords[dailyIndex(dailyRecords.length, 0)];
+  dailyRecords[(dayInSeason + clinicalOffset) % dailyRecords.length];
 
 const challenge =
-  challenges[dailyIndex(challenges.length, 17)];
+  challenges[(dayInSeason + challengeOffset) % challenges.length];
 
 const kindness =
-  kindnessPrompts[dailyIndex(kindnessPrompts.length, 43)];
+  kindnessPrompts[(dayInSeason + kindnessOffset) % kindnessPrompts.length];
 
 const factRecord =
-  dailyRecords[dailyIndex(dailyRecords.length, 71)];
+  dailyRecords[(dayInSeason + factOffset) % dailyRecords.length];
 
 const question =
-  dailyQuestions[dailyIndex(dailyQuestions.length, 89)];
-
-
+  dailyQuestions[(dayInSeason + questionOffset) % dailyQuestions.length];
+  
 /* ---------- DISPLAY ---------- */
 
 document.getElementById("clinicalWord").textContent =
